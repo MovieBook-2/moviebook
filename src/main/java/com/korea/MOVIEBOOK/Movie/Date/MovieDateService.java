@@ -22,4 +22,9 @@ public class MovieDateService {
         }
         return false;
     }
+
+    public void delete(String date){
+        MovieDate movieDate = this.movieDateRepository.findBydailyDate(date);
+        this.movieDateRepository.delete(movieDate);
+    }
 }

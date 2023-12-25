@@ -12,40 +12,34 @@ public class MovieDailyService {
     private final MovieDailyRepository movieDailyRepository;
     private final MovieDateService movieDateService;
 
-    public void addKmdb(String plot, String company, String imageUrl, String director) {
-            MovieDaily movie = this.movieDailyRepository.findBydirector(director);
-            String plotcontent = plot.replaceAll("!HS", "").replaceAll("!HE", "").replaceAll("\\s+", "");
-            movie.setPlot(plotcontent);
-            movie.setCompany(company);
-            movie.setImageUrl(imageUrl);
-            this.movieDailyRepository.save(movie);
+    public void addKmdb(String plot, String company, String imageUrl, String date, String title) {
+
+        MovieDaily movie = this.movieDailyRepository.findByDateAndTitle(date,title);
+        String plotcontent = plot.replaceAll("!HS", "").replaceAll("!HE", "").replaceAll("\\s+", "");
+        movie.setPlot(plotcontent);
+        movie.setCompany(company);
+        movie.setImageUrl(imageUrl);
+        this.movieDailyRepository.save(movie);
     }
 
-    public void addDeail(String date, String actorText, String runtime, String genre, String releaseDate, String viewingRating, String director) {
-
-        if (this.movieDateService.add(date)) {
-            MovieDaily movie = new MovieDaily();
-            movie.setActor(actorText);
-            movie.setRuntime(runtime);
-            movie.setGenre(genre);
-            movie.setReleaseDate(releaseDate);
-            movie.setViewingRating(viewingRating);
-            movie.setDirector(director);
-            this.movieDailyRepository.save(movie);
-        }
+    public void addDeail(String movieNm, String actorText, String runtime, String genre, String releaseDate, String viewingRating, String director, String date) {
+        MovieDaily movie = new MovieDaily();
+        movie.setActor(actorText);
+        movie.setRuntime(runtime);
+        movie.setGenre(genre);
+        movie.setReleaseDate(releaseDate);
+        movie.setViewingRating(viewingRating);
+        movie.setDirector(director);
+        movie.setTitle(movieNm);
+        movie.setDate(date);
+        this.movieDailyRepository.save(movie);
     }
 
-    public boolean add(Long rank, String title, Long audiAcc, String date, String director) {
-        MovieDaily movie = this.movieDailyRepository.findBydirector(director);
-        if (this.movieDateService.add(date)) {
-            movie.setRank(rank);
-            movie.setTitle(title);
-            movie.setAudiAcc(audiAcc);
-            movie.setDate(date);
-            this.movieDailyRepository.save(movie);
-            return true;
-        }
-        return false;
+    public void add(Long rank, String title, Long audiAcc, String date) {
+        MovieDaily movie = this.movieDailyRepository.findByDateAndTitle(date,title);
+        movie.setRank(rank);
+        movie.setAudiAcc(audiAcc);
+        this.movieDailyRepository.save(movie);
     }
 
     public boolean update(Long rank, String title, String date) {
@@ -65,6 +59,7 @@ public class MovieDailyService {
         int i = 0 ;
         while( i < movieDailyList.size() ){
             this.movieDailyRepository.delete(movieDailyList.get(i));
+            i++;
         }
     }
 

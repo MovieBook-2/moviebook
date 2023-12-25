@@ -57,6 +57,13 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
     <script>
+<!--        setTimeout(function() {-->
+<!--            if (!document.querySelector('.dailyMovie')) {-->
+<!--                alert("데이터 불러오는 중입니다.");-->
+<!--                location.reload();-->
+<!--            }-->
+<!--        }, 3000);-->
+
         var swiper = new Swiper(".mySwiper", {
           spaceBetween: 30,
           pagination: {
@@ -68,6 +75,7 @@
             prevEl: ".swiper-button-prev",
           },
         });
+
     </script>
 </div>
 </body>
