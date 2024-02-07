@@ -1,23 +1,32 @@
 .layout {
-    height: 100%;
-    min-height: 100vh;
+    height: 100vh;
+    min-height: 1000px;
     width: 15%;
-    min-width: 200px;
-    background: gainsboro;
+    min-width: 310px;
+    background: #d2e1ff;
+}
+
+.layout > ul > li {
+    margin-top: 10px;
 }
 
 .menuTab {
     display: flex;
-    border-radius: 10px;
-    justify-content: center;
-    font-weight: bold;
+    border-radius: 0 50px 50px 0;
+    padding: 10px 50px 10px 24px;
     font-size: medium;
+    border: none;
+}
+
+.menuTab:hover {
+    background-color: #fbd7ed;
+    color : white;
+    border: none;
 }
 
 .menuDetail {
     height: 100vh;
-    padding: 40px 40px 0px 50px;
-    min-width: 100vh;
+    padding: 40px 40px 0px 40px;
 }
 
 .searchButton {
@@ -27,8 +36,13 @@
 }
 
 .noticeBoard {
+    color: white;
     font-size: 20px;
     padding: 10px
+}
+
+.myArticle {
+    color: black;
 }
 
 .contentList {
@@ -40,9 +54,11 @@
 }
 
 .textList {
-    background: lightgray;
+    background: black;
 }
 
-.questionList:hover {
-
+.questionTitle:hover {
+    cursor: pointer;
+    text-decoration: underline;
+    transition: 0.1s;
 }

@@ -18,7 +18,7 @@
 <body>
 <div layout:fragment="content" style="display : flex; width: 100%;">
     <div class="profileMenu"
-         style="width : 15%; background: #D2E1FF; height: 100vh; min-height: 1100px; min-width: 310px;">
+         style="width: 15%; background: #D2E1FF; height: 100vh; min-height: 1100px; min-width: 310px;">
         <div style="margin-top: 23px;">
             <div>
                  <span class="s_name" name="s_name" sec:authorize="isAuthenticated()"
@@ -44,7 +44,7 @@
                 <li><a class="menu-item" type="change_pw" th:href="@{/member/changePw}" >비밀번호 변경</a></li>
                 <li>
                     <details close>
-                        <summary style="margin-left: 7px;" class="menu-item">구매 내역</summary>
+                        <summary class="menu-item">구매 내역</summary>
                         <ul>
                             <li><a class="menu-item" type="purchasedetails_movie" th:href="@{/member/purchasedetails/movie}">영화 구매 내역</a></li>
                             <li><a class="menu-item" type="purchasedetails_drama" th:href="@{/member/purchasedetails/drama}">드라마 구매 내역</a></li>
