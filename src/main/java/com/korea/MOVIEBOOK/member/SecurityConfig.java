@@ -34,20 +34,18 @@ public class SecurityConfig {
                         .requestMatchers(new AntPathRequestMatcher("/**")).permitAll())
                 .formLogin(formLogin -> formLogin
                         .loginPage("/member/login")
-                        .defaultSuccessUrl("/")
-//                        .successHandler(savedRequestAwareAuthenticationSuccessHandler()))
-                        .successHandler((request, response, authentication) -> {
-                            HttpSession session = request.getSession();
-                            String destination = "/";
-                            if(session.getAttribute("referer") != null) {
-                                destination  = (String)session.getAttribute("referer");
-                            }
-                            System.out.println(destination);
-                            response.sendRedirect(destination);
-                        }))
+                        .defaultSuccessUrl("/"))
+//
 
                 .oauth2Login(oauth2Login -> oauth2Login
                         .loginPage("/member/login")  // OAuth2 로그인 페이지 설정
+                        .defaultSuccessUrl("/")
+                        .successHandler(savedRequestAwareAuthenticationSuccessHandler())
+                        .failureHandler((request, response, exception) -> {
+                            int a = 10;
+                            exception.printStackTrace();
+                            System.out.println("hihihi");
+                        })      // 로그인 성공 후 리다이렉트 URL3
                         .failureHandler((request, response, exception) -> {
                             System.out.println("hihihihi");
                             exception.printStackTrace();
@@ -73,13 +71,37 @@ public class SecurityConfig {
     }
     @Bean
     public ClientRegistrationRepository clientRegistrationRepository() {
-        return new InMemoryClientRegistrationRepository(this.kakaoClientRegistration(), this.googleClientRegistration(), naverClientRegistration());
+        return new InMemoryClientRegistrationRepository(this.kakaoClientRegistration(), this.googleClientRegistration(), this.naverClientRegistration());
     }
+    @Bean
+    public SavedRequestAwareAuthenticationSuccessHandler savedRequestAwareAuthenticationSuccessHandler() {
+        SavedRequestAwareAuthenticationSuccessHandler handler = new SavedRequestAwareAuthenticationSuccessHandler();
+        handler.setUseReferer(true);
+        return handler;
+    }
+
+
+//    private ClientRegistration googleClientRegistration() {
+//        return ClientRegistration.withRegistrationId("google")
+//                .clientId("286082206804-488g2m1ncjkn87hq3g1c1m406crijhre.apps.googleusercontent.com")
+//                .clientSecret("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")
+//                .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
+//                .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
+//                .redirectUri("http://localhost:8888/login/oauth2/code/google")
+//                .scope("profile", "email", "address", "phone")
+//                .authorizationUri("https://accounts.google.com/o/oauth2/v2/auth")
+//                .tokenUri("https://www.googleapis.com/oauth2/v4/token")
+//                .userInfoUri("https://www.googleapis.com/oauth2/v3/userinfo")
+//                .userNameAttributeName(IdTokenClaimNames.SUB)
+//                .jwkSetUri("https://www.googleapis.com/oauth2/v3/certs")
+//                .clientName("Google")
+//                .build();
+//    }
 
     private ClientRegistration googleClientRegistration() {
         return ClientRegistration.withRegistrationId("google")
-                .clientId("286082206804-488g2m1ncjkn87hq3g1c1m406crijhre.apps.googleusercontent.com")
-                .clientSecret("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")
+                .clientId("286082206804-jndj19gauu19aksqnscei5hf5jd2qkgt.apps.googleusercontent.com")
+                .clientSecret("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")
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 .redirectUri("http://localhost:8888/login/oauth2/code/google")
