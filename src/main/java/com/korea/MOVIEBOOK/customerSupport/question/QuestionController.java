@@ -30,7 +30,7 @@ public class QuestionController {
     @GetMapping("/questionForm")
     public String questionForm(Model model, QuestionCreateForm questionCreateForm) {
         model.addAttribute("category", Category.QUESTION);
-        return "/customerSupport/question/questionForm";
+        return "customerSupport/question/questionForm";
     }
 
     @PostMapping("/createQuestion")
@@ -38,7 +38,7 @@ public class QuestionController {
         Member member = memberService.getMember(principal.getName());
         if (bindingResult.hasErrors()) {
             model.addAttribute("category", Category.QUESTION);
-            return "/customerSupport/question/questionForm";
+            return "customerSupport/question/questionForm";
         }
         questionService.create(member, questionCreateForm.getTitle(), questionCreateForm.getContent(), Category.QUESTION, questionCreateForm.isCheckBox());
         return "redirect:/customerSupport/question";
@@ -47,7 +47,7 @@ public class QuestionController {
     @GetMapping("/noticeForm")
     public String noticeForm(Model model, QuestionCreateForm questionCreateForm) {
         model.addAttribute("category", Category.NOTICE);
-        return "/customerSupport/question/questionForm";
+        return "customerSupport/question/questionForm";
     }
 
     @PostMapping("/createNotice")
@@ -55,7 +55,7 @@ public class QuestionController {
         Member member = memberService.getMember(principal.getName());
         if (bindingResult.hasErrors()) {
             model.addAttribute("category", Category.NOTICE);
-            return "/customerSupport/question/questionForm";
+            return "customerSupport/question/questionForm";
         }
         questionService.create(member, questionCreateForm.getTitle(), questionCreateForm.getContent(), Category.NOTICE, questionCreateForm.isCheckBox());
         return "redirect:/customerSupport/notice";
@@ -64,7 +64,7 @@ public class QuestionController {
     @GetMapping("/FAQForm")
     public String FAQForm(Model model, QuestionCreateForm questionCreateForm) {
         model.addAttribute("category", Category.FAQ);
-        return "/customerSupport/question/questionForm";
+        return "customerSupport/question/questionForm";
     }
 
     @PostMapping("/createFAQ")
@@ -72,7 +72,7 @@ public class QuestionController {
         Member member = memberService.getMember(principal.getName());
         if (bindingResult.hasErrors()) {
             model.addAttribute("category", Category.FAQ);
-            return "/customerSupport/question/questionForm";
+            return "customerSupport/question/questionForm";
         }
         questionService.create(member, questionCreateForm.getTitle(), questionCreateForm.getContent(), Category.FAQ, questionCreateForm.isCheckBox());
         return "redirect:/customerSupport/FAQ";
@@ -89,7 +89,7 @@ public class QuestionController {
             } else {    //  비회원인데 비밀글이 아닐때
                 model.addAttribute("question", question);
                 model.addAttribute("category", question.getCategory());
-                return "/customerSupport/question/questionDetail";
+                return "customerSupport/question/questionDetail";
             }
         } else {    //  로그인했을때
             if (question.isPrivate()) {
@@ -97,7 +97,7 @@ public class QuestionController {
                     model.addAttribute("user", member);
                     model.addAttribute("question", question);
                     model.addAttribute("category", question.getCategory());
-                    return "/customerSupport/question/questionDetail";
+                    return "customerSupport/question/questionDetail";
                 } else {    //  로그인했고 비밀글이지만 작성자 아닐때
                     System.out.println("====================>작성자 아닐때");
                     System.out.println("====================>" + errorMsg);
@@ -107,7 +107,7 @@ public class QuestionController {
                 model.addAttribute("user", member);
                 model.addAttribute("question", question);
                 model.addAttribute("category", question.getCategory());
-                return "/customerSupport/question/questionDetail";
+                return "customerSupport/question/questionDetail";
             }
         }
     }

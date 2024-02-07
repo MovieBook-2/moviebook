@@ -21,10 +21,13 @@
          style="width: 15%; background: #D2E1FF; height: 100vh; min-height: 1100px; min-width: 310px;">
         <div style="margin-top: 23px;">
             <div>
+                <div style="display: flex; flex-direction: column; align-items: baseline;">
                  <span class="s_name" name="s_name" sec:authorize="isAuthenticated()"
                        th:if="${member != null}"
-                       th:text="${#strings.concat(member.getNickname(), ' 님 무비부비에 오신것을 환영합니다')}"
+                       th:text="${#strings.concat(member.getNickname()) + ' 님'}"
                        style="font-size : large; margin-left: 8px;"></span>
+                    <span th:text="'무비부비에 오신것을 환영합니다'"></span>
+                </div>
                 <div style="display : flex; font-weight : bold; border-bottom : 2px solid black; margin-top: 15px;">
                     <img src="/etc/coin.png" style="height : 20px; margin-top : 1px; margin-right : 1px;">
                     <span style="margin-right : 3px;  color: black;">보유 코인 : </span>
