@@ -23,6 +23,10 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     Page<Review> findByBook(Book book, Pageable pageable);
     Page<Review> findByDrama(Drama drama, Pageable pageable);
     Page<Review> findByWebtoon(Webtoon webtoon, Pageable pageable);
+
+//    Page<Review> MemberReviewPage(Member member, Pageable pageable);
+
+
     @Query("SELECT r.movie.id, COUNT(r.movie.id) AS reviewCount, SUM(r.rating) / COUNT(r.movie.id) AS reviewRating " +
             "FROM Review r " +
             "INNER JOIN r.movie m " +
@@ -30,5 +34,4 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
             "GROUP BY r.movie.id " +
             "ORDER BY reviewCount DESC, reviewRating DESC")
     List<Object[]> findMovieRankings();
-
 }

@@ -8,6 +8,10 @@ import com.korea.MOVIEBOOK.movie.MovieDTO;
 import com.korea.MOVIEBOOK.movie.daily.MovieDailyAPI;
 import com.korea.MOVIEBOOK.movie.movie.Movie;
 import com.korea.MOVIEBOOK.movie.movie.MovieService;
+import com.korea.MOVIEBOOK.webtoon.days.Day;
+import com.korea.MOVIEBOOK.webtoon.days.DayService;
+import com.korea.MOVIEBOOK.webtoon.webtoonDayList.WebtoonDayList;
+import com.korea.MOVIEBOOK.webtoon.webtoonDayList.WebtoonDayListService;
 import com.korea.MOVIEBOOK.webtoon.webtoonList.Webtoon;
 import com.korea.MOVIEBOOK.webtoon.webtoonList.WebtoonService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -34,7 +38,8 @@ public class MainController {
     private final MovieService movieService;
     private final WebtoonService webtoonService;
     private final ContentsService contentsService;
-
+    private final WebtoonDayListService webtoonDayListService;
+    private final DayService dayService;
     LocalDateTime yesterday = LocalDateTime.now().minusDays(1);
     String date = yesterday.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
     @GetMapping(value = "/test", produces = "application/json")
@@ -110,10 +115,31 @@ public class MainController {
         return "search/drama_search_list";
     }
     @GetMapping("/")
-    public String mainPage(Model model) {
+    public String mainPage(Model model, Day day) {
 
         List<ContentsDTO> contentsDTOList = new ArrayList<>();
         List<Book> bestSellerList = bookService.getBestSellerList();
+
+
+
+        List<Day> days = this.dayService.findAll();
+        List<List<List<Webtoon>>> allList = new ArrayList<>();//  월,화,수,목,금,토,일이라는 값을 가져오기 위함
+        List<Webtoon> webtoonList = new ArrayList<>();
+
+        for (Day day1 : days) {
+            List<WebtoonDayList> webtoonDayLists = webtoonDayListService.findBywebtoonDay(day1);
+            if(webtoonDayLists.isEmpty()){
+                List<Long> webtoon = webtoonService.getWebtoonAPI(day1.getUpdateDays());
+                webtoonDayListService.SaveWebtoonDayList(day1.getId(), webtoon);
+            }
+            webtoonDayLists = webtoonDayListService.findBywebtoonDay(day1);
+            for (WebtoonDayList webtoonDayList : webtoonDayLists) {
+                Webtoon webtoon2 = webtoonDayList.getWebtoonList();
+                webtoonList.add(webtoon2);
+            }
+        }
+
+
         List<MovieDTO> boxofficeList = movieService.listOfMovieDailyDTO();
         if (boxofficeList.isEmpty()) {
             List<Map> failedMovieList = movieDailyAPI.movieDaily(date);
@@ -122,9 +148,13 @@ public class MainController {
         }
         boxofficeList = movieService.listOfMovieDailyDTO();
 
+
+
         List<Book> bookList = bestSellerList.subList(0, Math.min(5, bestSellerList.size()));
+        List<Webtoon> webtoonList1 = webtoonList.subList(0, Math.min(5, bestSellerList.size()));
         List<MovieDTO> movieList = boxofficeList.subList(0, Math.min(5, boxofficeList.size()));
         model.addAttribute("bookList", bookList);
+        model.addAttribute("webtoonList", webtoonList1);
         model.addAttribute("movieList", movieList);
 
         return "mainPage";
@@ -136,8 +166,5 @@ public class MainController {
             movieDailySize(failedMoiveList);
         }
     }
-
-
-
 }
 

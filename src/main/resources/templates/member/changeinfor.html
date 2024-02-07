@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="en" layout:decorate="~{/member/my_page_layout}" class="profileContents" id="changeinfor">
+<html lang="en" layout:decorate="~{member/my_page_layout}" class="profileContents" id="changeinfor">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-<div layout:fragment="profileContent" style="min-width: 1000px; width: 85%; height: 100%">
+<div layout:fragment="profileContent" class="menudetail" id="change_information" style="min-width: 1000px; width: 85%; height: 100%">
     <form id="menu" name="frm" style="display : flex; flex-direction: column; align-items: center; margin-top: 60px"
           enctype="multipart/form-data">
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
         <input type="hidden" id="id" name="id" th:value="${member?.Id == null ? '' : member.Id}">
         <div style="min-height: 400px; min-width: 400px; width: 30%; height: 30%; display: flex; flex-direction: column; justify-content: center;">
-            <img id="preview" src="/member/defaultImage.jpg">
+            <img id="preview" th:src="${member.getProfileImage()}">
         </div>
         <div class="MenuDet" name="MenuDet" style="margin-top: 10px;">
             <input type="file" name="file" accept="image/png, image/jpeg, image/jpg" onchange="previewImage(this)">

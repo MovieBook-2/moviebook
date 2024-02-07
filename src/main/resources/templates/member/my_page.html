@@ -4,7 +4,8 @@
     <title>Title</title>
 </head>
 <body>
-<div layout:fragment="profileContent" class="menudetail" id="mypage" style="width: 85%; height: 100vh; min-height: 1100px;">
+<div layout:fragment="profileContent" class="menudetail" id="mypage"
+     style="width: 85%; height: 100vh; min-height: 1100px;">
 
     <div style="display: flex; margin-top: 60px; flex-direction: column; align-items: center;">
         <div style="min-height: 400px; min-width: 400px; width: 30%; height: 30%; display: flex; flex-direction: column; justify-content: center;">
@@ -29,6 +30,18 @@
                 <p th:if="${reviewCount ==null}" th:text="${'('+ paging.getTotalElements+')'}"></p>
                 <p th:if="${reviewCount !=null}" th:text="${'('+ reviewCount+')'}"></p>
             </div>
+            <form th:action="@{/review/detail}" method="get">
+                <button>
+                    <div th:each="review : ${reviews}" style="height : 278px; display: grid; gap: 8px; width : 285px;">
+                        <span th:text="${review.getCategory()}"></span>
+                        <span th:text="${review.getComment()}"></span>
+                        <span th:text="${review.getBook()}"></span>
+                        <span th:text="${review.getDateTime()}"></span>
+                        <img th:if="${review.member.profileImage}" th:src="${review.member.profileImage}"
+                             style="height : 33px; width : 33px; border-radius : 17px;">
+                    </div>
+                </button>
+            </form>
         </div>
     </div>
 

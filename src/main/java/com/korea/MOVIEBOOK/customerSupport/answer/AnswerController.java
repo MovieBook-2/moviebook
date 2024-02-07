@@ -24,7 +24,7 @@ public class AnswerController {
         Question question = questionService.findByQuestionId(questionId);
         model.addAttribute("category", Category.QUESTION);
         model.addAttribute("question", question);
-        return "/customerSupport/answer/answerForm";
+        return "customerSupport/answer/answerForm";
     }
 
     @PostMapping("/createAnswer")
@@ -39,7 +39,7 @@ public class AnswerController {
         Question question = questionService.findByQuestionId(questionId);
         model.addAttribute("category", Category.QUESTION);
         model.addAttribute("question", question);
-        return "/customerSupport/answer/answerUpdateForm";
+        return "customerSupport/answer/answerUpdateForm";
     }
 
     @PostMapping("/updateAnswer")

@@ -15,9 +15,12 @@ import com.korea.MOVIEBOOK.webtoon.webtoonList.Webtoon;
 import com.korea.MOVIEBOOK.webtoon.webtoonList.WebtoonRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Objects;
 import java.security.Principal;
@@ -40,7 +43,7 @@ public class ReviewController {
     }
 
     @GetMapping("/create/drama")
-    public String createDramaReview(@RequestParam("dramaId") Long dramaId, @RequestParam("comment") String comment, @RequestParam("rating") Double rating, Principal principal) {
+    public String createDramaReview(@RequestParam("dramaId") Long dramaId, @RequestParam("contentsID") String contentsID, @RequestParam("comment") String comment, @RequestParam("rating") Double rating, Principal principal) {
 
         String providerID = principal.getName();
         Member member = this.memberService.findByproviderId(providerID);
@@ -48,12 +51,12 @@ public class ReviewController {
             member = this.memberService.getMember(providerID);
         }
 
-        this.reviewService.saveDramaReview(dramaId, comment, rating, member);
+        this.reviewService.saveDramaReview(dramaId, comment, contentsID, rating, member);
         return "redirect:/drama/detail/" + dramaId;
     }
 
     @GetMapping("/create/movie")
-    public String createMovieReview(@RequestParam("movieCD") String movieCD, @RequestParam("comment") String comment, @RequestParam("rating") Double rating, Principal principal) {
+    public String createMovieReview(@RequestParam("movieCD") String movieCD, @RequestParam("contentsID") String contentsID,  @RequestParam("comment") String comment, @RequestParam("rating") Double rating, Principal principal) {
 
         String providerID = principal.getName();
         Member member = this.memberService.findByproviderId(providerID);
@@ -61,7 +64,7 @@ public class ReviewController {
             member = this.memberService.getMember(providerID);
         }
 
-        this.reviewService.saveMovieReview(movieCD, comment, rating, member);
+        this.reviewService.saveMovieReview(movieCD, comment, contentsID, rating, member);
         return "redirect:/movie/detail/" + movieCD;
     }
 
@@ -82,7 +85,7 @@ public class ReviewController {
     }
 
     @GetMapping("/create/book")
-    public String createBookReview(@RequestParam("isbn") String isbn, @RequestParam("comment") String comment, @RequestParam("rating") Double rating, Principal principal) {
+    public String createBookReview(@RequestParam("isbn") String isbn, @RequestParam("contentsID") String contentsID,  @RequestParam("comment") String comment, @RequestParam("rating") Double rating, Principal principal) {
 
         String providerID = principal.getName();
         Member member = this.memberService.findByproviderId(providerID);
@@ -90,12 +93,12 @@ public class ReviewController {
             member = this.memberService.getMember(providerID);
         }
 
-        reviewService.saveBookReview(isbn, comment, rating, member);
+        reviewService.saveBookReview(isbn, comment, contentsID, rating, member);
         return "redirect:/book/detail/" + isbn;
     }
 
     @GetMapping("/create/webtoon")
-    public String createWebtoonReview(@RequestParam("webtoonId") Long webtoonId, @RequestParam("comment") String comment, @RequestParam("rating") Double rating, Principal principal) {
+    public String createWebtoonReview(@RequestParam("webtoonId") Long webtoonId, @RequestParam("contentsID") String contentsID, @RequestParam("comment") String comment, @RequestParam("rating") Double rating, Principal principal) {
 
         String providerID = principal.getName();
         Member member = this.memberService.findByproviderId(providerID);
@@ -103,7 +106,7 @@ public class ReviewController {
             member = this.memberService.getMember(providerID);
         }
 
-        this.reviewService.saveWebtoonReview(webtoonId, comment, rating, member);
+        this.reviewService.saveWebtoonReview(webtoonId, contentsID, comment, rating, member);
         return "redirect:/webtoon/detail/" + webtoonId;
     }
 

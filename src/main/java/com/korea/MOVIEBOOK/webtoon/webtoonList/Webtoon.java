@@ -46,6 +46,10 @@ public class Webtoon {
 
     private String detailUrl;
 
+
+    @Column(columnDefinition = "text")
+    private String plot;     //  요약
+
     @OneToMany(mappedBy = "webtoonList")
     private List<WebtoonDayList> webtoonDayLists;
 
