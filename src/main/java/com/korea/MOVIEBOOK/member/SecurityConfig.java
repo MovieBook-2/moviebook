@@ -48,8 +48,11 @@ public class SecurityConfig {
 
                 .oauth2Login(oauth2Login -> oauth2Login
                         .loginPage("/member/login")  // OAuth2 로그인 페이지 설정
-                        .defaultSuccessUrl("/")
-                        .successHandler(savedRequestAwareAuthenticationSuccessHandler()))      // 로그인 성공 후 리다이렉트 URL3
+                        .failureHandler((request, response, exception) -> {
+                            System.out.println("hihihihi");
+                            exception.printStackTrace();
+                        })
+                        .defaultSuccessUrl("/"))
                 .logout(logout -> logout
                         .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
                         .logoutSuccessUrl("/")
@@ -72,12 +75,7 @@ public class SecurityConfig {
     public ClientRegistrationRepository clientRegistrationRepository() {
         return new InMemoryClientRegistrationRepository(this.kakaoClientRegistration(), this.googleClientRegistration(), naverClientRegistration());
     }
-    @Bean
-    public SavedRequestAwareAuthenticationSuccessHandler savedRequestAwareAuthenticationSuccessHandler() {
-        SavedRequestAwareAuthenticationSuccessHandler handler = new SavedRequestAwareAuthenticationSuccessHandler();
-        handler.setUseReferer(true);
-        return handler;
-    }
+
     private ClientRegistration googleClientRegistration() {
         return ClientRegistration.withRegistrationId("google")
                 .clientId("286082206804-488g2m1ncjkn87hq3g1c1m406crijhre.apps.googleusercontent.com")
@@ -98,7 +96,7 @@ public class SecurityConfig {
     private ClientRegistration kakaoClientRegistration() {
         return ClientRegistration.withRegistrationId("kakao")
                 .clientId("c85a61301f37545e9f8d0819abc77a8f")
-                .redirectUri("http://localhost:8888/login/oauth2/code/kakao")
+                .redirectUri("https://moviebook.site/login/oauth2/code/kakao")
                 .clientSecret("Ce4UFSlocsYjvNF0NaYKuzo4ZNQl7gDY")
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_POST)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
@@ -115,7 +113,7 @@ public class SecurityConfig {
         return ClientRegistration.withRegistrationId("naver")
                 .clientId("YbsKJH1dMFw8nSmVJKAV")
                 .clientSecret("dqHpkKMGPB")
-                .redirectUri("http://localhost:8888/login/oauth2/code/naver")
+                .redirectUri("https://moviebook.site/login/oauth2/code/naver")
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_POST)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 .scope("nickname", "email", "username", "profile_image")

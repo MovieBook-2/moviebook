@@ -201,6 +201,12 @@
                         title: title,
                 });
             }
+            function success_page(title){
+                Swal.fire({
+                        icon: 'success',
+                        title: title,
+                });
+            }
 
             function check_info(m_email, s_phone, amount, msg) {
                 if (m_email == "" && s_phone == "") {
@@ -212,8 +218,15 @@
                 } else if (s_phone == "") {
                     error_page(msg + '\n전화번호를 작성해주세요.');
                     return false;
+                } else {
+                    success_page(msg);
                 }
+
+                setTimeout(function() {
+                        location.reload();
+                }, 2000);
                 return true;
+
             }
 
             $(document).ready(function(){

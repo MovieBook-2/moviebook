@@ -97,4 +97,9 @@ public class DramaService {
 
         return dramaRepository.findAllByDramaKeyword(kw, pageable);
     }
+    public List<Drama> getDramaListNotPaging(String kw) {
+        return dramaRepository.findAllByMovieKeywordnotPaging(kw);
+    }
+
+
 }

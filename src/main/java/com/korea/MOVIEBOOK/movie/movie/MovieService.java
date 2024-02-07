@@ -221,6 +221,10 @@ public class MovieService {
         return movieRepository.findAllByMovieKeyword(kw, pageable);
     }
 
+    public List<Movie>  getMovieListNotPaging(String kw) {
+        return movieRepository.findAllByMovieKeywordnotPaging(kw);
+    }
+
 
     public List<Movie> getRandomMovies() {
         List<Movie> allMovies = this.movieRepository.findAll();
