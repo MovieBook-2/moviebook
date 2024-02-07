@@ -141,7 +141,7 @@ public class QuestionController {
         }
     }
 
-    @GetMapping("updateForm/{questionId}")
+    @GetMapping("/updateForm/{questionId}")
     public String updateQuestionForm(@PathVariable Long questionId, Model model, Principal principal, String category, QuestionCreateForm questionCreateForm) {
         Question question = questionService.findByQuestionId(questionId);
         Member member = memberService.getMember(principal.getName());
@@ -158,7 +158,7 @@ public class QuestionController {
         }
     }
 
-    @PostMapping("update/{questionId}")
+    @PostMapping("/update/{questionId}")
     public String updateQuestion(@PathVariable Long questionId, Model model, String category, QuestionCreateForm questionCreateForm, Principal principal) {
         Question question = questionService.updateQuestion(questionId, questionCreateForm);
         return "redirect:/customerSupport/question/detail/" + question.getId();
