@@ -4,8 +4,8 @@
     <link rel="stylesheet" href="/book/bookMainPage.css">
 </head>
 <body layout:fragment="content">
-<div class="swiper-1" style="background : white;">
-    <div style="width : 1340px; margin : auto;">
+<div class="swiper-1">
+    <div style="width : 1340px; display: flex; flex-direction: column;">
         <div class="swiper mySwiper" style="margin-top: 10px; margin-bottom: 55px; width: 95%;" th:each="bookListList, indexNum : ${allList}">
             <div style="display : flex; flex-direction: column-reverse; padding:5px">
                 <div class="swiper-pagination swiper-pagination"
