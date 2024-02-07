@@ -98,7 +98,6 @@ public class SecurityConfig {
 //                .build();
 //    }
 
-
     private ClientRegistration googleClientRegistration() {
         return ClientRegistration.withRegistrationId("google")
                 .clientId("286082206804-jndj19gauu19aksqnscei5hf5jd2qkgt.apps.googleusercontent.com")
