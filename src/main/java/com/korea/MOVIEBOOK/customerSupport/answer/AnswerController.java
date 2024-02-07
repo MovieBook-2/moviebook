@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("customerSupport/answer")
+@RequestMapping("/customerSupport/answer")
 public class AnswerController {
 
     private final AnswerService answerService;

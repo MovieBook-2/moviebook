@@ -25,7 +25,7 @@ public class CustomerSupportController {
     private final QuestionService questionService;
     private final MemberService memberService;
 
-    @GetMapping("notice")
+    @GetMapping("/notice")
     public String mainPage(Model model, Principal principal, @RequestParam(value="page", defaultValue="0") int page) {
         Page<Question> paging = questionService.getQuestionList(Category.NOTICE, page);
         if (principal != null) {
@@ -37,7 +37,7 @@ public class CustomerSupportController {
         return "customerSupport/customerSupportQuestion";
     }
 
-    @GetMapping("question")
+    @GetMapping("/question")
     public String question(Model model, Principal principal, @RequestParam(value="page", defaultValue="0") int page) {
         Page<Question> paging = questionService.getQuestionList(Category.QUESTION, page);
         if (principal != null) {
@@ -49,7 +49,7 @@ public class CustomerSupportController {
         return "customerSupport/customerSupportQuestion";
     }
 
-    @GetMapping("FAQ")
+    @GetMapping("/FAQ")
     public String FAQ(Model model, Principal principal, @RequestParam(value="page", defaultValue="0") int page) {
         Page<Question> paging = questionService.getQuestionList(Category.FAQ, page);
         if (principal != null) {
@@ -61,7 +61,7 @@ public class CustomerSupportController {
         return "customerSupport/customerSupportQuestion";
     }
 
-    @GetMapping("myQuestion")
+    @GetMapping("/myQuestion")
     public String myQuestion(Principal principal, Model model, @RequestParam(value="page", defaultValue="0") int page) {
         Member member = memberService.getMember(principal.getName());
         Page<Question> paging = questionService.getMyQuestionList(member, page);
