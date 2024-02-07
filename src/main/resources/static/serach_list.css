@@ -37,3 +37,68 @@
 .more_webtoonlist {
     display: none;
 }
+
+.wrap {
+    position: absolute;
+    vertical-align: middle;
+    top: 100px;
+    left: 10px;
+  }
+
+  .wrap .arrow {
+    position: relative;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    overflow: hidden;
+    vertical-align: middle;
+  }
+
+  .wrap .arrow:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 10px;
+    height:10px;
+    -webkit-transform: translate(-50%, -50%) rotate(45deg);
+    transform: translate(-50%, -50%) rotate(45deg);
+    margin-top: 2px;
+    border-top: 1px solid #333;
+    border-left: 1px solid #333;
+  }
+  .wrap .arrow.top:before {
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+  .wrap .arrow.down:before {
+    transform: translate(-50%, -50%) rotate(-135deg);
+  }
+  .wrap .arrow.left:before {
+    transform: translate(-50%, -50%) rotate(315deg);
+  }
+  .wrap .arrow.right:before {
+    transform: translate(-50%, -50%) rotate(135deg);
+  }
+
+/* reset    */
+
+html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,
+blockquote,pre,abbr,address,cite,code,del,dfn,em,img,
+ins,kbd,q,samp,small,strong,sub,sup,var,b,i,dl,dt,dd,ol,ul,li,
+fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,
+article,aside,canvas,details,figcaption,figure,footer,header,hgroup,
+menu,nav,section,summary,time,mark,audio,video,fieldset {margin:0; padding:0; }
+
+
+ol,ul{list-style:none}
+li { list-style-type:none; }
+table{border-collapse:collapse;border-spacing:0;}
+img{max-width:100%;height:auto;}
+mark{background:none}
+select{max-width:100%;}
+caption, legend {display:none;}
+hr{display:none;}
+h1,h2,h3,h4,h5,h6 { font-size:100%; }
+address,strong{font-style:normal; font-weight:normal;}
+table {border-collapse:collapse; }
+input, select{outline: none;font-family:inherit}

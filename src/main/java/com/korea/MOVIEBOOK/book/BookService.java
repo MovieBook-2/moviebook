@@ -234,4 +234,10 @@ public class BookService {
 
         return bookRepository.findAllByBookKeyword(kw, pageable);
     }
+
+    public List<Book> getBookListNotPaging(String kw) {
+        return bookRepository.findAllByBookKeywordnotPaging(kw);
+    }
+
+
 }
