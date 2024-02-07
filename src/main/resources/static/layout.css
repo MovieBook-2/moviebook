@@ -32,6 +32,7 @@ body {
 }
 .layout{
     border-bottom: 1.5px solid #FFF;
+    min-width: 1000px;
     width : 75%;
     white-space: nowrap;
     display: flex;
@@ -51,18 +52,10 @@ body {
     text-align : center;
 }
 
-.category_bar{
-    color : white;
-    display : block;
-    position : relative;
-    height : 40px;
-    line-height : 40px;
-    padding : 0 24px;
-    font-size : 17px;
-    font-weight : bold;
-    letter-spacing : 0.1em;
-    white-space : nowrap;
+.category-bar {
+    color: white;
 }
+
 .category:after {
     display:block;
     width:70px;

@@ -178,26 +178,6 @@ public class BookService {
         book.setRecommended(recommend);
         bookRepository.save(book);
     }
-    private BookDTO createBookDTO(Map<String, Object> bookData) {
-        try {
-            return BookDTO.builder()
-                    .title((String) bookData.get("title"))
-                    .author((String) bookData.get("author"))
-                    .plot((String) bookData.get("plot"))
-                    .isbn((String) bookData.get("isbn"))
-                    .isbn13((String) bookData.get("isbn13"))
-                    .imageUrl((String) bookData.get("cover"))
-                    .publisher((String) bookData.get("publisher"))
-                    .priceStandard((Integer) bookData.get("priceStandard"))
-                    .bestRank((Integer) bookData.get("bestRank"))
-                    .pubDate(getLocalDate(bookData.get("pubDate")))
-                    .build();
-        } catch (Exception e) {
-            // 예외 처리
-            e.printStackTrace();
-            return null;
-        }
-    }
 
     private LocalDate getLocalDate(Object dateObj) {
         //  String으로 받은 날짜 데이터를 LocalDate타입으로 변경해주는 함수
@@ -242,14 +222,10 @@ public class BookService {
 
         return authorListList;
     }
-    public Book findByTitle(String title) {
-        return bookRepository.findByTitle(title);
-    }
 
     public Book findByIsbn(String isbn) {
         return bookRepository.findByIsbn(isbn);
     }
-
 
     public Page<Book> getBookList(int page, String kw) {
         List<Sort.Order> sorts = new ArrayList<>();
@@ -258,4 +234,10 @@ public class BookService {
 
         return bookRepository.findAllByBookKeyword(kw, pageable);
     }
+
+    public List<Book> getBookListNotPaging(String kw) {
+        return bookRepository.findAllByBookKeywordnotPaging(kw);
+    }
+
+
 }

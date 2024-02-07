@@ -136,14 +136,24 @@
                         <button class="img">
                             <img th:src="${book.getImageUrl}" style="height: 100%;">
                         </button>
-                        <input type="hidden" name="isbn" th:value="${book.getIsbn}">
+                        <input type="hidden" name="isbn" th:value="${book.getIsbn()}">
+                    </form>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <div style="display: flex; justify-content: center;">
+                    <form th:action="@{/webtoon/detail}" method="get" th:each="webtoon : ${webtoonList}" style="display: flex; align-items: center; border: solid 1px; margin: 5px;">
+                        <button class="img">
+                            <img th:src="${webtoon.getImageUrl}" style="height: 100%;">
+                        </button>
+                        <input type="hidden" name="webtoonId" th:value="${webtoon.getWebtoonId()}">
                     </form>
                 </div>
             </div>
         </div>
         <div class="swiper-pagination"></div>
-        <div class="swiper-button-prev"></div>
-        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev" style="color: #fbd7ed;"></div>
+        <div class="swiper-button-next" style="color: #fbd7ed;"></div>
     </div>
     <div>
         <button onclick="clickChat()">

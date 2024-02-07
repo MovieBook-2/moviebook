@@ -288,7 +288,6 @@ public class MovieController {
         return "contents/contents_detail";
     }
 
-
     public void movieDailySize(List<Map> failedMovieList) {
         if (failedMovieList != null && !failedMovieList.isEmpty()) {
             List<Map> failedMoiveList = movieDailyAPI.saveDailyMovieDataByAPI(failedMovieList);

@@ -45,7 +45,12 @@ public class SecurityConfig {
                             int a = 10;
                             exception.printStackTrace();
                             System.out.println("hihihi");
-                        }))      // 로그인 성공 후 리다이렉트 URL3
+                        })      // 로그인 성공 후 리다이렉트 URL3
+                        .failureHandler((request, response, exception) -> {
+                            System.out.println("hihihihi");
+                            exception.printStackTrace();
+                        })
+                        .defaultSuccessUrl("/"))
                 .logout(logout -> logout
                         .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
                         .logoutSuccessUrl("/")
@@ -114,7 +119,7 @@ public class SecurityConfig {
     private ClientRegistration kakaoClientRegistration() {
         return ClientRegistration.withRegistrationId("kakao")
                 .clientId("c85a61301f37545e9f8d0819abc77a8f")
-                .redirectUri("http://localhost:8888/login/oauth2/code/kakao")
+                .redirectUri("https://moviebook.site/login/oauth2/code/kakao")
                 .clientSecret("Ce4UFSlocsYjvNF0NaYKuzo4ZNQl7gDY")
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_POST)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
@@ -131,7 +136,7 @@ public class SecurityConfig {
         return ClientRegistration.withRegistrationId("naver")
                 .clientId("YbsKJH1dMFw8nSmVJKAV")
                 .clientSecret("dqHpkKMGPB")
-                .redirectUri("http://localhost:8888/login/oauth2/code/naver")
+                .redirectUri("https://moviebook.site/login/oauth2/code/naver")
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_POST)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 .scope("nickname", "email", "username", "profile_image")

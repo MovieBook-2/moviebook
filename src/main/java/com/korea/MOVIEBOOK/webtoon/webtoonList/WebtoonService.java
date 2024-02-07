@@ -159,6 +159,10 @@ public class WebtoonService {
         return webtoonRepository.findAllByWebtoonKeyword(kw, pageable);
     }
 
+    public List<Webtoon> getWebtoonListNotPaging(String kw){
+        return webtoonRepository.findAllByWebtoonKeywordnotPaging(kw);
+    }
+
 
 //    public Page<Webtoon> getWebtoonPurchase(Member member, int page) {
 //        List<Sort.Order> sorts = new ArrayList<>();

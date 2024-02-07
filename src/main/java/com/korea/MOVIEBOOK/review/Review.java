@@ -25,6 +25,8 @@ public class Review {
 
     private String Category;         // movie, tv, book, webtoon
 
+    private String contentsID;
+
     @Column(length = 1000)            // 1000 char로 제한
     private String comment;           // 리뷰 내용
 

@@ -25,4 +25,12 @@ public interface BookRepository extends JpaRepository<Book, Long> {
             "  where REGEXP_REPLACE(REPLACE(REPLACE( b.author, '(', '<'), ')' ,'>'), '<([^<>]+)>', '') LIKE %:kw% " +
             "   OR b.title LIKE %:kw% ")
     Page<Book> findAllByBookKeyword(@Param("kw") String kw, Pageable pageable);
+
+    @Query("SELECT b FROM Book b " +
+            "  where REGEXP_REPLACE(REPLACE(REPLACE( b.author, '(', '<'), ')' ,'>'), '<([^<>]+)>', '') LIKE %:kw% " +
+            "   OR b.title LIKE %:kw% ")
+    List<Book> findAllByBookKeywordnotPaging(@Param("kw") String kw);
+
+
+
 }

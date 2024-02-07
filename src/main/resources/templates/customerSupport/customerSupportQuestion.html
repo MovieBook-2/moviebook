@@ -1,4 +1,4 @@
-<html lang="ko" layout:decorate="~{/customerSupport/customerSupportLayout}">
+<html lang="ko" layout:decorate="~{customerSupport/customerSupportLayout}">
 <div layout:fragment="CScontent" class="menuDetail" id="default">
     <div style="width: 100%; display: flex; flex-direction: row-reverse;">
         <div style="display: flex; height: 2.5rem; width: 40%; margin-right: 10%;">
@@ -11,7 +11,7 @@
         </div>
     </div>
     <div class="contentList">
-        <table style="width: 80%; min-width: 840px;">
+        <table style="width: 80%; min-width: 950px;">
             <thead>
             <tr class="textList">
                 <th class="noticeBoard" style="width: 10%">번호</th>
@@ -24,17 +24,17 @@
             </thead>
             <tbody style="border-bottom: gray solid 1px;">
             <tr th:each="question : ${paging}">
-                <th class="noticeBoard" style="width: 10%" th:text="${question.id}"></th>
-                <th class="noticeBoard" style="width: 40%">
+                <th class="noticeBoard myArticle" style="width: 10%" th:text="${question.id}"></th>
+                <th class="noticeBoard myArticle" style="width: 40%">
                     <form th:action="@{'/customerSupport/question/detail/' + ${question.id}}" method="get">
                         <button class="questionTitle" th:text="${question.title}" style="width: 100%"></button>
                     </form>
                 </th>
-                <th class="noticeBoard" th:text="${question.member.nickname}"></th>
-                <th class="noticeBoard" th:text="${#temporals.format(question.writeDate, 'yyyy-MM-dd')}"></th>
-                <th class="noticeBoard">조회수</th>
+                <th class="noticeBoard myArticle" th:text="${question.member.nickname}"></th>
+                <th class="noticeBoard myArticle" th:text="${#temporals.format(question.writeDate, 'yyyy-MM-dd')}"></th>
+                <th class="noticeBoard myArticle">조회수</th>
                 <th style="text-align: -webkit-center; vertical-align: middle;"><img th:if="${question.isPrivate}" src="/imgs/lock.png" alt="" style="width: 35px;"></th>
-                <th class="noticeBoard" th:if="${member != null}">
+                <th class="noticeBoard myArticle" th:if="${member != null}">
                     <form class="btn btn-outline" th:action="@{'/customerSupport/question/delete/' + ${question.id}}" method="post"
                           th:if="${question.member.username == member.username || member.username == 'admin'}">
                         <input type="hidden" name="category" th:value="${category}">
