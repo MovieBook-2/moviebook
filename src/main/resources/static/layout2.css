@@ -112,3 +112,10 @@ a {
     justify-content: center;
     margin-top: 5px;
 }
+
+.swiper-1 {
+    background: white;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
