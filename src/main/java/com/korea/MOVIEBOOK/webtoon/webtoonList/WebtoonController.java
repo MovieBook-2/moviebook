@@ -176,6 +176,9 @@ public class WebtoonController {
         }
         return "contents/contents_detail";
     }
+
+
+
     @GetMapping("/detail/{webtoonId}")
     public String WebtoonDetail2(Model model, @PathVariable("webtoonId") Long webtoonId, Principal principal){
         Webtoon webtoon = this.webtoonService.findWebtoonByWebtoonId(webtoonId);

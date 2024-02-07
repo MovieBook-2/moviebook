@@ -1,5 +1,6 @@
 package com.korea.MOVIEBOOK.review;
 
+import com.korea.MOVIEBOOK.customerSupport.answer.Answer;
 import com.korea.MOVIEBOOK.drama.Drama;
 import com.korea.MOVIEBOOK.drama.DramaService;
 import com.korea.MOVIEBOOK.movie.movie.Movie;
@@ -32,12 +33,13 @@ public class ReviewService {
     private final WebtoonService webtoonService;
     private final DramaService dramaService;
 
-    public void saveMovieReview(String movieCD, String comment, Double rating, Member member){
+    public void saveMovieReview(String movieCD, String comment, String contentsID, Double rating, Member member){
 
         Movie movie =  this.movieService.findMovieByCD(movieCD);
         Review review = new Review();
         review.setMovie(movie);
         review.setComment(comment);
+        review.setContentsID(contentsID);
         review.setCategory("movie");
         review.setRating(rating);
         review.setMember(member);
@@ -60,13 +62,12 @@ public class ReviewService {
         this.reviewRepository.save(review);
     }
 
-
-
-    public void saveDramaReview(Long dramaId, String comment, Double rating, Member member){
+    public void saveDramaReview(Long dramaId, String contentsID,String comment, Double rating, Member member){
         Drama drama = this.dramaService.getDramaById(dramaId);
         Review review = new Review();
         review.setDrama(drama);
         review.setComment(comment);
+        review.setContentsID(contentsID);
         review.setCategory("drama");
         review.setRating(rating);
         review.setMember(member);
@@ -74,11 +75,12 @@ public class ReviewService {
         this.reviewRepository.save(review);
     }
 
-    public void saveBookReview(String isbn, String comment, Double rating, Member member){
+    public void saveBookReview(String isbn, String contentsID, String comment, Double rating, Member member){
         Book book = bookRepository.findByIsbn(isbn);
         Review review = new Review();
         review.setBook(book);
         review.setComment(comment);
+        review.setContentsID(contentsID);
         review.setCategory("book");
         review.setRating(rating);
         review.setMember(member);
@@ -87,12 +89,12 @@ public class ReviewService {
     }
 
 
-
-    public void saveWebtoonReview(Long webtoonId, String comment, Double rating, Member member) {
+    public void saveWebtoonReview(Long webtoonId, String contentsID, String comment, Double rating, Member member) {
         Webtoon webtoon = this.webtoonService.findWebtoonByWebtoonId(webtoonId);
         Review review = new Review();
         review.setWebtoon(webtoon);
         review.setComment(comment);
+        review.setContentsID(contentsID);
         review.setCategory("webtoon");
         review.setRating(rating);
         review.setMember(member);
@@ -110,6 +112,7 @@ public class ReviewService {
     public Long getReivewCount(Member member) {
         return reviewRepository.countByMember(member);
     }
+
 
 
     public List<Review> getReviewByBookId(Long BookId) {
@@ -155,6 +158,15 @@ public class ReviewService {
         return this.reviewRepository.findByWebtoon(webtoon, pageable);
     }
 
+
+
+
+//    public Page<Review> getReviewsByMember(Member member, int page) {
+//        List<Sort.Order> sorts = new ArrayList<>();
+//        sorts.add(Sort.Order.desc("dateTime"));
+//        Pageable pageable = PageRequest.of(page, 10,Sort.by(sorts));
+//        return this.reviewRepository.MemberReviewPage(member, pageable);
+//    }
 
 
 

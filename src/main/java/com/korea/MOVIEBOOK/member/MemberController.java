@@ -1,6 +1,9 @@
 package com.korea.MOVIEBOOK.member;
 
+import com.korea.MOVIEBOOK.ContentsDTO;
+import com.korea.MOVIEBOOK.ContentsService;
 import com.korea.MOVIEBOOK.book.BookService;
+import com.korea.MOVIEBOOK.customerSupport.answer.Answer;
 import com.korea.MOVIEBOOK.drama.DramaService;
 import com.korea.MOVIEBOOK.movie.movie.Movie;
 import com.korea.MOVIEBOOK.movie.movie.MovieService;
@@ -45,6 +48,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.bouncycastle.asn1.x500.style.RFC4519Style.member;
 
@@ -63,6 +67,7 @@ public class MemberController {
     private final BookService bookService;
     private final DramaService dramaService;
     private final WebtoonService webtoonService;
+    private final ContentsService contentsService;
 
     @GetMapping("/signup")
     public String signup(MemberCreateForm memberCreateForm) {
@@ -220,7 +225,7 @@ public class MemberController {
 
     @GetMapping("/mypage")
     @PreAuthorize("isAuthenticated()")
-    public String showmyPage(Model model, Principal principal) {
+    public String showmyPage(Model model, Principal principal, Long webtoonId) {
         Member member = memberService.findByusername(principal.getName());
         if (member == null) {
             member = memberService.findByproviderId(principal.getName());
@@ -234,7 +239,6 @@ public class MemberController {
         model.addAttribute("member", member);
 
 
-
         List<Payment> payments = this.paymentService.findPaymentListByMember(member);
         long sum = 0;
 
@@ -246,15 +250,24 @@ public class MemberController {
             }
         }
         Long reviewCount = reviewService.getReivewCount(member);
+        List<Review> reviews = member.getReviewList().stream().limit(12).collect(Collectors.toList());
+        List<Review> reviewList = member.getReviewList();
 
+        double avgRating = reviews.stream() // reviews에서 stream 생성
+                .filter(review -> review.getRating() != null) // rating이 null인 review는 제외
+                .mapToDouble(Review::getRating) // 리뷰 객체에서 평점만 추출하여 정수 스트림 생성
+                .average() // 평점의 평균값 계산
+                .orElse(0); // 리뷰가 없을 경우 0.0출력
+
+        Collections.sort(reviews, Comparator.comparing(Review::getDateTime).reversed());
+
+        model.addAttribute("avgRating", String.format("%.1f", avgRating));
+        model.addAttribute("reviews", reviews);
         model.addAttribute("sum", sum);
+        model.addAttribute("reviewList", reviewList);
         model.addAttribute("reviewCount", reviewCount);
 
 //        Page<Payment> paging = this.paymentService.getPaymentsByMember(member, page);
-
-
-//        List<Review> reviewList = reviewService.getAnswerTop5LatestByUser(user);
-//        model.addAttribute("answerList", answerList);
         return "member/my_page";
     }
 
@@ -299,6 +312,13 @@ public class MemberController {
     }
 
 
+//    @GetMapping("/review/list")
+//    public String memberReviewList(Principal principal, Model model, @RequestParam(value="page", defaultValue="0") int page){
+//        Member member = memberService.getMember(principal.getName());
+//        Page<Review> paging = reviewService.getReviewsByMember(member, page);
+//        return "";
+//    }
+
     @GetMapping("/changeInformation")
     public String updateNm(Model model, NicknameForm nicknameForm, Principal principal, @RequestParam(value="page", defaultValue="0") int page) {
 
@@ -332,6 +352,7 @@ public class MemberController {
     @GetMapping("/changePw")
     public String changePw(Model model, PasswordChangeForm passwordChangeForm, Principal principal, @RequestParam(value="page", defaultValue="0") int page) {
         paymentMember(model, principal, page);
+
 
         return "member/changepw";
     }
@@ -368,8 +389,6 @@ public class MemberController {
     }
 
 
-
-
     @GetMapping("/purchasedetails")
     public String memberPurchaseDetails(PasswordResetForm passwordResetForm, Principal principal, Model model, @RequestParam(value="page", defaultValue="0") int page) {
 
@@ -383,6 +402,20 @@ public class MemberController {
     public String moviepurchasedetails(Principal principal, Model model, @RequestParam(value="page", defaultValue="0") int page) {
         Member member = memberService.getMember(principal.getName());
         Page<Payment> paging = paymentService.getPaidMovieList(member, page);
+
+        List<Payment> payments = this.paymentService.findPaymentListByMember(member);
+        long sum = 0;
+
+        for (int i = 0; i < payments.size(); i++) {
+            if (payments.get(i).getContent().contains("충전")) {
+                sum += Long.valueOf(payments.get(i).getPaidAmount());
+            } else {
+                sum -= Long.valueOf(payments.get(i).getPaidAmount());
+            }
+        }
+
+        model.addAttribute("member", member);
+        model.addAttribute("sum", sum);
         model.addAttribute("paging", paging);
         return "member/contents_purchase_details/movie_purchase_details";
     }
@@ -391,6 +424,20 @@ public class MemberController {
     public String dramapurchasedetails(Principal principal, Model model, @RequestParam(value="page", defaultValue="0") int page) {
         Member member = memberService.getMember(principal.getName());
         Page<Payment> paging = paymentService.getPaidDramaList(member, page);
+
+        List<Payment> payments = this.paymentService.findPaymentListByMember(member);
+        long sum = 0;
+
+        for (int i = 0; i < payments.size(); i++) {
+            if (payments.get(i).getContent().contains("충전")) {
+                sum += Long.valueOf(payments.get(i).getPaidAmount());
+            } else {
+                sum -= Long.valueOf(payments.get(i).getPaidAmount());
+            }
+        }
+
+        model.addAttribute("member", member);
+        model.addAttribute("sum", sum);
         model.addAttribute("paging", paging);
         return "member/contents_purchase_details/drama_purchase_details";
     }
@@ -399,6 +446,20 @@ public class MemberController {
     public String bookpurchasedetails(Principal principal, Model model, @RequestParam(value="page", defaultValue="0") int page) {
         Member member = memberService.getMember(principal.getName());
         Page<Payment> paging = paymentService.getPaidBookList(member, page);
+
+        List<Payment> payments = this.paymentService.findPaymentListByMember(member);
+        long sum = 0;
+
+        for (int i = 0; i < payments.size(); i++) {
+            if (payments.get(i).getContent().contains("충전")) {
+                sum += Long.valueOf(payments.get(i).getPaidAmount());
+            } else {
+                sum -= Long.valueOf(payments.get(i).getPaidAmount());
+            }
+        }
+
+        model.addAttribute("member", member);
+        model.addAttribute("sum", sum);
         model.addAttribute("paging", paging);
         return "member/contents_purchase_details/book_purchase_details";
     }
@@ -407,6 +468,20 @@ public class MemberController {
     public String webtoonpurchasedetails(Principal principal, Model model, @RequestParam(value="page", defaultValue="0") int page) {
         Member member = memberService.getMember(principal.getName());
         Page<Payment> paging = paymentService.getPaidWebtoonList(member, page);
+
+        List<Payment> payments = this.paymentService.findPaymentListByMember(member);
+        long sum = 0;
+
+        for (int i = 0; i < payments.size(); i++) {
+            if (payments.get(i).getContent().contains("충전")) {
+                sum += Long.valueOf(payments.get(i).getPaidAmount());
+            } else {
+                sum -= Long.valueOf(payments.get(i).getPaidAmount());
+            }
+        }
+
+        model.addAttribute("member", member);
+        model.addAttribute("sum", sum);
         model.addAttribute("paging", paging);
         return "member/contents_purchase_details/webtoon_purchase_details";
     }
