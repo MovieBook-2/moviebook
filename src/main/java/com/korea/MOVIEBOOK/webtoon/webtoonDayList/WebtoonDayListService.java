@@ -40,7 +40,6 @@ public class WebtoonDayListService {
                     Integer fanCount = ((WebtoonDayList) webtoonDayList).getWebtoonList().getFanCount();
                     return fanCount != null ? fanCount : 0;
                 }).reversed());
-
         return webtoonDayLists;
     }
 
