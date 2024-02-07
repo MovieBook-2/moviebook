@@ -8,17 +8,17 @@
 </head>
 <body>
 <div layout:fragment="content" style="width: 100%; height: 100%; min-height : 576px;">
-    <div style="margin-bottom: 50px; display: flex; flex-direction: column;">
-        <div style="margin-left: 20%; margin-top : 30px;">
+    <div style="margin-bottom: 50px; display: flex; flex-direction: column; background : white;">
+        <div style="display: flex; justify-content: center; background : white;">
+            <div style="margin-top : 30px; margin-left: 10%;">
             <span th:text="'&quot;' + ${kw} + '&quot;'"
                   style="font-weight: bold; rgb(116, 116, 123); margin-right: 5px;"></span>
-            <span style="margin-top: 10px;"> 의 검색결과</span>
-        </div>
-        <div style="font-weight: bold; margin-left: 20%; margin-top : 30px;">
-            <span style="font-size: 25px; color:black;">웹툰</span>
-        </div>
-        <div style="display: flex; justify-content: center;">
-            <div style="width : 60%; display : flex;">
+                <span style="margin-top: 10px;"> 의 검색결과</span>
+            </div>
+            <div style="font-weight: bold; margin-top : 30px; margin-left: 10%;">
+                <span style="font-size: 25px; color:black;">영화</span>
+            </div>
+            <div style="display : flex;">
                 <form th:action="@{/movie/detail}" method="get" th:if="${pagingMovie}" th:each="movie, loop : ${pagingMovie}">
                     <button>
                         <div class="img" style="padding : 5px; width: 213px; height: 305px; display: flex;
