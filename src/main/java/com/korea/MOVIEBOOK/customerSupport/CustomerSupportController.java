@@ -25,34 +25,47 @@ public class CustomerSupportController {
     private final QuestionService questionService;
     private final MemberService memberService;
 
-    @GetMapping("notice")
-    public String mainPage(Model model, @RequestParam(value="page", defaultValue="0") int page) {
+    @GetMapping("/notice")
+    public String mainPage(Model model, Principal principal, @RequestParam(value="page", defaultValue="0") int page) {
         Page<Question> paging = questionService.getQuestionList(Category.NOTICE, page);
+        if (principal != null) {
+            Member member = memberService.getMember(principal.getName());
+            model.addAttribute("member", member);
+        }
         model.addAttribute("paging", paging);
         model.addAttribute("category", Category.NOTICE);
         return "customerSupport/customerSupportQuestion";
     }
 
-    @GetMapping("question")
-    public String question(Model model, @RequestParam(value="page", defaultValue="0") int page) {
+    @GetMapping("/question")
+    public String question(Model model, Principal principal, @RequestParam(value="page", defaultValue="0") int page) {
         Page<Question> paging = questionService.getQuestionList(Category.QUESTION, page);
+        if (principal != null) {
+            Member member = memberService.getMember(principal.getName());
+            model.addAttribute("member", member);
+        }
         model.addAttribute("paging", paging);
         model.addAttribute("category", Category.QUESTION);
         return "customerSupport/customerSupportQuestion";
     }
 
-    @GetMapping("FAQ")
-    public String FAQ(Model model, @RequestParam(value="page", defaultValue="0") int page) {
+    @GetMapping("/FAQ")
+    public String FAQ(Model model, Principal principal, @RequestParam(value="page", defaultValue="0") int page) {
         Page<Question> paging = questionService.getQuestionList(Category.FAQ, page);
+        if (principal != null) {
+            Member member = memberService.getMember(principal.getName());
+            model.addAttribute("member", member);
+        }
         model.addAttribute("paging", paging);
         model.addAttribute("category", Category.FAQ);
         return "customerSupport/customerSupportQuestion";
     }
 
-    @GetMapping("myQuestion")
+    @GetMapping("/myQuestion")
     public String myQuestion(Principal principal, Model model, @RequestParam(value="page", defaultValue="0") int page) {
         Member member = memberService.getMember(principal.getName());
         Page<Question> paging = questionService.getMyQuestionList(member, page);
+        model.addAttribute("member", member);
         model.addAttribute("paging", paging);
         model.addAttribute("category", Category.MYQUESTION);
         return "customerSupport/customerSupportQuestion";
