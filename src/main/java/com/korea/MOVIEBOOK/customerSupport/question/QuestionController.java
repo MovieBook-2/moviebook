@@ -82,7 +82,6 @@ public class QuestionController {
     public String questionDetail(@PathVariable Long questionId, Model model, Principal principal) {
         Question question = questionService.findByQuestionId(questionId);
         String errorMsg = "해당 글을 읽을 권한이 없습니다.";
-        Member member = memberService.getMember(principal.getName());
         if (principal == null) {    //  로그인안했을때
             if (question.isPrivate()) { //  로그인 안했는데 비밀글 일때
                 return "redirect:/customerSupport/question?error=" + URLEncoder.encode(errorMsg, StandardCharsets.UTF_8);
@@ -92,6 +91,7 @@ public class QuestionController {
                 return "customerSupport/question/questionDetail";
             }
         } else {    //  로그인했을때
+            Member member = memberService.getMember(principal.getName());
             if (question.isPrivate()) {
                 if (question.getMember() == member || member.getUsername().equals("admin")) {   //  로그인했고 비밀글이지만 작성자 맞을때
                     model.addAttribute("user", member);
