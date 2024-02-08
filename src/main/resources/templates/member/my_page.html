@@ -8,10 +8,10 @@
      style="width: 85%; height: 100vh; min-height: 1100px;">
 
     <div style="display: flex; margin-top: 60px; flex-direction: column; align-items: center;">
-        <div style="min-height: 400px; min-width: 400px; width: 30%; height: 30%; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-            <img style="max-width: 70%;" id="img" th:src="${member.getProfileImage()}">
+        <div style="min-height: 400px; min-width: 400px; width: 30%; height: 30%; display: flex; flex-direction: column; justify-content: center;">
+            <img style="max-width: 70%; margin-left: 170px;" id="img" th:src="${member.getProfileImage()}">
         </div>
-        <div class="info" style="font-size: 20px;">
+        <div class="info" style="font-size: 20px; margin-top: -400px; margin-right: 750px;">
             <div style="margin-bottom: 5px;">
                 <span style="color : #868e96;">아이디 :</span>
                 <span th:text="${member.getUsername()}" style="color : #868e96;"></span>
