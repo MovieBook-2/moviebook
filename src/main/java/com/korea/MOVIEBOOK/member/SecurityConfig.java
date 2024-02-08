@@ -104,7 +104,7 @@ public class SecurityConfig {
                 .clientSecret("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")
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-                .redirectUri("http://localhost:8888/login/oauth2/code/google")
+                .redirectUri("https://moviebook.site/login/oauth2/code/google")
                 .scope("profile", "email", "address", "phone")
                 .authorizationUri("https://accounts.google.com/o/oauth2/v2/auth")
                 .tokenUri("https://www.googleapis.com/oauth2/v4/token")

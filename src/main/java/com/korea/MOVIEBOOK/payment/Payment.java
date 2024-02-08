@@ -36,7 +36,7 @@ public class Payment {
 
     //    private String name;            // 회원 이름(= nickname)
     @Column(columnDefinition = "text")
-    private String content;
+    private String content;          // 결제한 내용 (13800Coin 사용)
 
     private String contents;         // 결제한 컨텐츠 카테고리 ( movie,book,webtoon,drama)
 

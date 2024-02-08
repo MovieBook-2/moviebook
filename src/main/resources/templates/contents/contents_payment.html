@@ -20,7 +20,8 @@
                  style="width : 40px; height : 40px; margin-left : 7px;">
             <img th:if="${paid == 'true'}" class="down" src="/imgs/check.png"
                  style="width : 40px; height : 40px; margin-left : 7px;">
-            <p style="margin-top : 18px;" class="id=btn-modal">구매하기</p>
+            <p th:if="${paid == 'false'}" style="margin-top : 18px;" class="id=btn-modal">구매하기</p>
+            <p th:if="${paid == 'true'}" style="margin-top : 18px;" class="id=btn-modal">구매완료</p>
         </button>
         <div id="payment_modal" style="display: none; border-radius : 12px 0px 0px 0px;">
             <div class="modal-window" style="width : 100%; height : 100%;">
