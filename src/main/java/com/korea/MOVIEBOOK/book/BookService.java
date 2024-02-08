@@ -140,7 +140,6 @@ public class BookService {
         //  book정보를 db에 저장하는 함수
         String plot = (String) bookData.get("description");
         String replacedText = plot.replaceAll("&lt;", "<").replaceAll("&gt;", ">");
-
         Book book = new Book();
         book.setPlot(replacedText);
         book.setTitle((String) bookData.get("title"));
