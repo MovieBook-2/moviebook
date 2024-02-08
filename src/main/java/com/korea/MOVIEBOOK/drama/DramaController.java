@@ -1,6 +1,7 @@
 package com.korea.MOVIEBOOK.drama;
 import com.korea.MOVIEBOOK.ContentsService;
 import com.korea.MOVIEBOOK.ContentsDTO;
+import com.korea.MOVIEBOOK.SchedulerService;
 import com.korea.MOVIEBOOK.heart.Heart;
 import com.korea.MOVIEBOOK.heart.HeartRepository;
 import com.korea.MOVIEBOOK.member.Member;
@@ -32,9 +33,11 @@ public class DramaController {
     private final PaymentRepository paymentRepository;
     private final MemberService memberService;
     private final HeartRepository heartRepository;
-
+    private final SchedulerService schedulerService;
     @GetMapping("")
     public String dramaLists(Model model) {
+
+        this.schedulerService.dramaData();
         List<Drama> dramaList1 = dramaService.findDramasInRange(1, 10);
         List<Drama> dramaList2 = dramaService.findDramasInRange(11, 20);
 

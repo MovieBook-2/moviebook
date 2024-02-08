@@ -90,7 +90,7 @@ public class MemberController {
                     memberCreateForm.getPassword1(), memberCreateForm.getNickname(), memberCreateForm.getEmail());
             // memberService의 create 메서드를 호출하여 memberCreateForm에서 받은 데이터를 기반으로 새 회원을 생성하고
             // 그 결과로 반환된 회원 객체를 member 변수에 할당
-            emailService.sendEmail(member.getEmail(), "http://localhost:8888/member/verify?userId=" + member.getId());
+            emailService.sendEmail(member.getEmail(), "https://moviebook.site/member/verify?userId=" + member.getId());
             // 이메일 인증 링크 전송
         } catch (DataIntegrityViolationException e) {
             e.printStackTrace();

@@ -29,6 +29,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -43,6 +44,7 @@ public class MainController {
     private final ContentsService contentsService;
     private final WebtoonDayListService webtoonDayListService;
     private final DayService dayService;
+    private final SchedulerService schedulerService;
     LocalDateTime yesterday = LocalDateTime.now().minusDays(1);
     String date = yesterday.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
 
@@ -77,7 +79,7 @@ public class MainController {
 
     @GetMapping("/search/webtoon")
     public String searchWebtoonList(Model model,
-                                  @RequestParam(value = "kw", defaultValue = "") String kw){
+                                    @RequestParam(value = "kw", defaultValue = "") String kw) {
 
         List<Webtoon> webtoonList = this.webtoonService.getWebtoonListNotPaging(kw);
 
@@ -88,7 +90,7 @@ public class MainController {
 
     @GetMapping("/search/movie")
     public String searchMovieList(Model model,
-                                    @RequestParam(value = "kw", defaultValue = "") String kw){
+                                  @RequestParam(value = "kw", defaultValue = "") String kw) {
 
         List<Movie> movieList = this.movieService.getMovieListNotPaging(kw);
 
@@ -124,6 +126,7 @@ public class MainController {
 
         List<ContentsDTO> contentsDTOList = new ArrayList<>();
         List<Book> bestSellerList = bookService.getBestSellerList();
+        bestSellerList.sort(Comparator.comparing(Book::getBestRank));
         List<Day> days = this.dayService.findAll();
         //  오늘 요일가져오는 변수
         LocalDate today = LocalDate.now();
@@ -131,21 +134,24 @@ public class MainController {
         String dayOfWeekString = dayOfWeek.name();
 
         List<MovieDTO> boxofficeList = movieService.listOfMovieDailyDTO();
-//        if (boxofficeList.isEmpty()) {
-//            List<Map> failedMovieList = movieDailyAPI.movieDaily(date);
-//            movieDailySize(failedMovieList);
-//            movieService.listOfMovieDailyDTO();
-//        }
-//        boxofficeList = movieService.listOfMovieDailyDTO();
-//
-//        List<WebtoonDayList> webtoonDayLists = new ArrayList<>();
-//        for (Day day1 : days) {
-//            webtoonDayLists = webtoonDayListService.findBywebtoonDay(day1);
-//            if (webtoonDayLists.isEmpty()) {
-//                List<Long> webtoon = webtoonService.getWebtoonAPI(day1.getUpdateDays());
-//                webtoonDayListService.SaveWebtoonDayList(day1.getId(), webtoon);
-//            }
-//        }
+        if (boxofficeList.isEmpty()) {
+            List<Map> failedMovieList = movieDailyAPI.movieDaily(date);
+            movieDailySize(failedMovieList);
+            movieService.listOfMovieDailyDTO();
+        }
+        boxofficeList = movieService.listOfMovieDailyDTO();
+
+        this.schedulerService.webtoonData();
+
+
+        List<WebtoonDayList> webtoonDayLists = new ArrayList<>();
+        for (Day day1 : days) {
+            webtoonDayLists = webtoonDayListService.findBywebtoonDay(day1);
+            if (webtoonDayLists.isEmpty()) {
+                List<Long> webtoon = webtoonService.getWebtoonAPI(day1.getUpdateDays());
+                webtoonDayListService.SaveWebtoonDayList(day1.getId(), webtoon);
+            }
+        }
 
         List<Webtoon> webtoonList = new ArrayList<>();
 
