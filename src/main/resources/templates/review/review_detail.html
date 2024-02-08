@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" th:href="@{/review.css}">
 </head>
 <body layout:fragment="content">
-<div style="width : 100%; min-height: 715px; display: flex; flex-direction: column; align-items: center; padding-bottom : 34px;">
+<div style="width : 100%; display: flex; flex-direction: column; align-items: center; padding-bottom : 34px;">
     <div style="width : 53%; border-bottom: 1px solid #dddddd; margin-top : 25px;">
         <span style="font-size : 22px; font-weight : bold; margin-left : 28px;">코멘트</span>
         <div style="display: flex; margin-top: -27px; justify-content: flex-end; margin-bottom: 7px;" th:if="${memberInfo != null and memberInfo.id == review.member.id}">
@@ -56,7 +56,7 @@
             <input name="reviewId" type="hidden" th:value="${review.id}">
             <input name="contentsID" type="hidden" th:value="${contentsID}">
             <input name="category" type="hidden" th:value="${category}">
-            <input name="review" id="New-review" style="padding : 10px;" th:value="${review.comment}" readonly>
+            <input name="review" id="New-review" style="padding : 10px; width: 100%; height: auto;}" th:value="${review.comment}" readonly>
         </form>
         <div style="display : flex; margin-top : 28px; color : #868E96; cursor : default;">
             <span>좋아요</span>
@@ -133,8 +133,7 @@
                 </div>
                 <span th:text="${#temporals.format(comment.dateTime, 'yyyy-MM-dd')}"></span>
             </div>
-            <div sec:authorize="isAuthenticated()" th:if="${memberInfo != null and memberInfo.id == review.member.id}"
-                 style="display: flex;">
+            <div  style="display: flex;">
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                 <div class="Comment-Co" style="flex: 1;">
                     <form class="Comment-Co-Info">
@@ -143,10 +142,10 @@
                         <input name="commentId" type="hidden" th:value="${comment.id}">
                         <input name="contentsID" type="hidden" th:value="${contentsID}">
                         <input name="category" type="hidden" th:value="${category}">
-                        <input name="comment" id="New-comment" class="comment-input" th:value="${comment.content}" style="padding : 10px;"
+                        <input name="comment" id="New-comment" class="comment-input" th:value="${comment.content}" style="padding : 10px; width: 100%; height: auto;}"
                                readonly>
                     </form>
-                    <div style="display: flex; justify-content: flex-end;">
+                    <div style="display: flex; justify-content: flex-end;" th:if="${memberInfo != null and memberInfo.id == review.member.id}">
                         <button class="click-button" onclick="updateComment(this)" style="margin-right : 10px;">수정</button>
                         <button class="click-button" onclick="saveComment2(this)">저장</button>
                         <button class="click-button" onclick="deleteComment(this)" style="margin-left : 10px;">삭제</button>
@@ -182,6 +181,7 @@
     <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
     <script>
         var title = document.getElementById('title').innerText;
         let url = window.location.href;
@@ -363,6 +363,8 @@
             });
         });
 
+
+
         function saveComment() {
             var reviewID = document.getElementById('review_id').value;
             if(document.getElementById('member_id') == null){
@@ -377,7 +379,7 @@
             var comment = document.getElementById('comment').value;
 
             $.ajax({
-                url: "/comment/save",
+                url: "https://www.moviebook.site/comment/save",
                 type: "GET",
                 data: {
                     category: '[[${category}]]',
