@@ -24,24 +24,24 @@
                 <span style="color : #868e96;">이메일 :</span>
                 <span th:text="${member.getEmail()}" style="color : #868e96;"></span>
             </div>
-            <div>
-                <p th:text="${member.getNickname() + '님의'}"></p>
-                <p th:text="${type}"></p>
-                <p th:if="${reviewCount ==null}" th:text="${'('+ paging.getTotalElements+')'}"></p>
-                <p th:if="${reviewCount !=null}" th:text="${'('+ reviewCount+')'}"></p>
-            </div>
-            <form th:action="@{/review/detail}" method="get">
-                <button>
-                    <div th:each="review : ${reviews}" style="height : 278px; display: grid; gap: 8px; width : 285px;">
-                        <span th:text="${review.getCategory()}"></span>
-                        <span th:text="${review.getComment()}"></span>
-                        <span th:text="${review.getBook()}"></span>
-                        <span th:text="${review.getDateTime()}"></span>
-                        <img th:if="${review.member.profileImage}" th:src="${review.member.profileImage}"
-                             style="height : 33px; width : 33px; border-radius : 17px;">
-                    </div>
-                </button>
-            </form>
+<!--            <div>-->
+<!--                <p th:text="${member.getNickname() + '님의'}"></p>-->
+<!--                <p th:text="${type}"></p>-->
+<!--                <p th:if="${reviewCount ==null}" th:text="${'('+ paging.getTotalElements+')'}"></p>-->
+<!--                <p th:if="${reviewCount !=null}" th:text="${'('+ reviewCount+')'}"></p>-->
+<!--            </div>-->
+<!--            <form th:action="@{/review/detail}" method="get">-->
+<!--                <button>-->
+<!--                    <div th:each="review : ${reviews}" style="height : 278px; display: grid; gap: 8px; width : 285px;">-->
+<!--                        <span th:text="${review.getCategory()}"></span>-->
+<!--                        <span th:text="${review.getComment()}"></span>-->
+<!--                        <span th:text="${review.getBook()}"></span>-->
+<!--                        <span th:text="${review.getDateTime()}"></span>-->
+<!--                        <img th:if="${review.member.profileImage}" th:src="${review.member.profileImage}"-->
+<!--                             style="height : 33px; width : 33px; border-radius : 17px;">-->
+<!--                    </div>-->
+<!--                </button>-->
+<!--            </form>-->
         </div>
     </div>
 
