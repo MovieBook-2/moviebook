@@ -36,7 +36,6 @@ public class MovieDailyAPI {
         int i = 0;
 
         for (Map movie : movieList) {
-
             rData = this.movieAPI.movieDetail(movie);  // api2 호출
             if(rData.get("failedMovieList") != null) {
                 finalFailedMovieList.addAll((List<Map>) rData.get("failedMovieList"));
@@ -47,15 +46,7 @@ public class MovieDailyAPI {
                 MovieDaily movieDaily = this.movieDailyService.add((String) movie.get("movieCd"), Long.parseLong((String) movie.get("rank")), date);
                 this.movieService.test(movieDaily,(String) movie.get("movieNm"));
             }
-            i++;
-            System.out.println("=======i의값====" + i);
-            System.out.println("=======movie Code 의값 : " + movie.get("movieCd"));
-            System.out.println("=======movie Name 의값 : " + movie.get("movieNm"));
-            System.out.println("=======movie Rank 의값 : " + movie.get("rank"));
-            System.out.println("=======movie Acc 의값 : " + movie.get("audiAcc"));
         }
-
-        System.out.println("failedSize : " + finalFailedMovieList.size());
         return finalFailedMovieList;
     }
 
