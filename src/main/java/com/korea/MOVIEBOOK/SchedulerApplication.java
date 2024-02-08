@@ -46,7 +46,7 @@ public class SchedulerApplication {
     LocalDateTime weeksago = LocalDateTime.now().minusDays(7);
     String weeks = weeksago.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
 
-    @Scheduled(cron = "0 21 09 * * *") // 매일 오후 18시에 실행
+    @Scheduled(cron = "0 00 03 * * *") // 매일 오전 3시에 실행
     public void run() throws ParseException {
         List<Day> days = this.dayService.findAll();
         try {

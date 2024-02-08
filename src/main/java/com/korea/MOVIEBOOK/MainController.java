@@ -131,21 +131,6 @@ public class MainController {
         String dayOfWeekString = dayOfWeek.name();
 
         List<MovieDTO> boxofficeList = movieService.listOfMovieDailyDTO();
-        if (boxofficeList.isEmpty()) {
-            List<Map> failedMovieList = movieDailyAPI.movieDaily(date);
-            movieDailySize(failedMovieList);
-            movieService.listOfMovieDailyDTO();
-        }
-        boxofficeList = movieService.listOfMovieDailyDTO();
-
-        List<WebtoonDayList> webtoonDayLists = new ArrayList<>();
-        for (Day day1 : days) {
-            webtoonDayLists = webtoonDayListService.findBywebtoonDay(day1);
-            if (webtoonDayLists.isEmpty()) {
-                List<Long> webtoon = webtoonService.getWebtoonAPI(day1.getUpdateDays());
-                webtoonDayListService.SaveWebtoonDayList(day1.getId(), webtoon);
-            }
-        }
 
         List<Webtoon> webtoonList = new ArrayList<>();
 
