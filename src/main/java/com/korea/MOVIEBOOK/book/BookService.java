@@ -45,11 +45,9 @@ public class BookService {
             for (Map<String, Object> bookData : bookList) {
                 if (checkDuplicate((String) bookData.get("isbn"))) {
                     saveBook(bookData, isNew, recommend);
-                    System.out.println("============================= 책 추가됨 =============================");
                 } else if (!checkDuplicate((String) bookData.get("isbn")) &&
                         !bookRepository.findByIsbn((String) bookData.get("isbn")).getAddDate().equals(LocalDate.now())) {
                     updateBook(bookData, isNew, recommend);
-                    System.out.println("============================= 책 업데이트 됨 =============================");
                 }
             }
         } catch (HttpClientErrorException | HttpServerErrorException e) {
@@ -238,6 +236,4 @@ public class BookService {
     public List<Book> getBookListNotPaging(String kw) {
         return bookRepository.findAllByBookKeywordnotPaging(kw);
     }
-
-
 }
