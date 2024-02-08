@@ -46,7 +46,6 @@ public class WebtoonService {
             ResponseEntity<Map> resultMap = restTemplate.exchange(uri.toString(), HttpMethod.GET, entity, Map.class);
 
             ArrayList<Map> webtoonsList = (ArrayList<Map>) resultMap.getBody().get("webtoons");
-//            List<Webtoon> webtoonList = new ArrayList<>();
             for (Map<String, Object> webtoonData : webtoonsList) {
                 WebtoonDTO webtoonDTO = createWebtoonDTOFromMap(webtoonData);
                 Webtoon webtoon = webtoonRepository.findByWebtoonId(webtoonDTO.getWebtoonId());

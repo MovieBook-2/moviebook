@@ -49,10 +49,6 @@ public class WebtoonController {
         List<List<List<Webtoon>>> allList = new ArrayList<>();//  월,화,수,목,금,토,일이라는 값을 가져오기 위함
         List<Webtoon> webtoonList = new ArrayList<>();
 
-//        Collections.sort(webtoonList, Comparator.comparingInt(Webtoon::getFanCount).reversed());
-
-
-
         for (Day day1 : days) {
             List<WebtoonDayList> webtoonDayLists = webtoonDayListService.findBywebtoonDay(day1);
             if(webtoonDayLists.isEmpty()){
