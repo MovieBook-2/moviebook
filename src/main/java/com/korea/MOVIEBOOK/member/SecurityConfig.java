@@ -81,27 +81,10 @@ public class SecurityConfig {
     }
 
 
-//    private ClientRegistration googleClientRegistration() {
-//        return ClientRegistration.withRegistrationId("google")
-//                .clientId("286082206804-488g2m1ncjkn87hq3g1c1m406crijhre.apps.googleusercontent.com")
-//                .clientSecret("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")
-//                .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
-//                .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-//                .redirectUri("http://localhost:8888/login/oauth2/code/google")
-//                .scope("profile", "email", "address", "phone")
-//                .authorizationUri("https://accounts.google.com/o/oauth2/v2/auth")
-//                .tokenUri("https://www.googleapis.com/oauth2/v4/token")
-//                .userInfoUri("https://www.googleapis.com/oauth2/v3/userinfo")
-//                .userNameAttributeName(IdTokenClaimNames.SUB)
-//                .jwkSetUri("https://www.googleapis.com/oauth2/v3/certs")
-//                .clientName("Google")
-//                .build();
-//    }
-
     private ClientRegistration googleClientRegistration() {
         return ClientRegistration.withRegistrationId("google")
-                .clientId("286082206804-jndj19gauu19aksqnscei5hf5jd2qkgt.apps.googleusercontent.com")
-                .clientSecret("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")
+                .clientId("286082206804-488g2m1ncjkn87hq3g1c1m406crijhre.apps.googleusercontent.com")
+                .clientSecret("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")
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 .redirectUri("https://moviebook.site/login/oauth2/code/google")
@@ -114,6 +97,23 @@ public class SecurityConfig {
                 .clientName("Google")
                 .build();
     }
+
+//    private ClientRegistration googleClientRegistration() {
+//        return ClientRegistration.withRegistrationId("google")
+//                .clientId("286082206804-jndj19gauu19aksqnscei5hf5jd2qkgt.apps.googleusercontent.com")
+//                .clientSecret("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")
+//                .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
+//                .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
+//                .redirectUri("https://moviebook.site/login/oauth2/code/google")
+//                .scope("profile", "email", "address", "phone")
+//                .authorizationUri("https://accounts.google.com/o/oauth2/v2/auth")
+//                .tokenUri("https://www.googleapis.com/oauth2/v4/token")
+//                .userInfoUri("https://www.googleapis.com/oauth2/v3/userinfo")
+//                .userNameAttributeName(IdTokenClaimNames.SUB)
+//                .jwkSetUri("https://www.googleapis.com/oauth2/v3/certs")
+//                .clientName("Google")
+//                .build();
+//    }
 
     private ClientRegistration kakaoClientRegistration() {
         return ClientRegistration.withRegistrationId("kakao")

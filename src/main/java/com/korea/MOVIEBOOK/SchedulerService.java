@@ -120,8 +120,8 @@ public class SchedulerService {
         Optional<Drama> dramaOptional = this.dramaRepository.findById(1L);
         if (dramaOptional.isEmpty()) {
             String url = "jdbc:mysql://moviebook.cla8s6ms2f8l.ap-northeast-2.rds.amazonaws.com/movieboovie";
-            String user = "root";
-            String password = "";
+            String user = "admin";  // application.properties 파일과 동일하게 수정
+            String password = "qwer1234";  // application.properties 파일과 동일하게 수정
             try {
                 Connection myConn = DriverManager.getConnection(url, user, password);
 
