@@ -76,6 +76,6 @@ public class Oauth2UserService extends DefaultOAuth2UserService {
     private String getDefaultImageUrl(String provider) {
         if (provider.equals("google")) {
         }
-        return "/Member/defaultImage.jpg";
+        return "/member/defaultImage.jpg";
     }
 }
