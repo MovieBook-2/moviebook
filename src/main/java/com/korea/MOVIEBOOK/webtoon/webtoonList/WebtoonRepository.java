@@ -21,11 +21,13 @@ public interface WebtoonRepository extends JpaRepository<Webtoon, Long> {
     Page<Webtoon> findAll(Pageable pageable);
 
     @Query("SELECT w FROM Webtoon w " +
-            "WHERE  w.title LIKE %:kw% ")
+            "  where REGEXP_REPLACE(REPLACE(REPLACE( w.author, '(', '<'), ')' ,'>'), '<([^<>]+)>', '') LIKE %:kw% " +
+            "   OR w.title LIKE %:kw% ")
     Page<Webtoon> findAllByWebtoonKeyword(@Param("kw") String kw, Pageable pageable);
 
     @Query("SELECT w FROM Webtoon w " +
-            "WHERE  w.title LIKE %:kw% ")
+            "  where REGEXP_REPLACE(REPLACE(REPLACE( w.author, '(', '<'), ')' ,'>'), '<([^<>]+)>', '') LIKE %:kw% " +
+            "   OR w.title LIKE %:kw% ")
     List<Webtoon> findAllByWebtoonKeywordnotPaging(@Param("kw") String kw);
 
 

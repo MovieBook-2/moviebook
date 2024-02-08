@@ -43,6 +43,7 @@ public class MainController {
     private final ContentsService contentsService;
     private final WebtoonDayListService webtoonDayListService;
     private final DayService dayService;
+    private final SchedulerService schedulerService;
     LocalDateTime yesterday = LocalDateTime.now().minusDays(1);
     String date = yesterday.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
 
@@ -131,21 +132,24 @@ public class MainController {
         String dayOfWeekString = dayOfWeek.name();
 
         List<MovieDTO> boxofficeList = movieService.listOfMovieDailyDTO();
-//        if (boxofficeList.isEmpty()) {
-//            List<Map> failedMovieList = movieDailyAPI.movieDaily(date);
-//            movieDailySize(failedMovieList);
-//            movieService.listOfMovieDailyDTO();
-//        }
-//        boxofficeList = movieService.listOfMovieDailyDTO();
-//
-//        List<WebtoonDayList> webtoonDayLists = new ArrayList<>();
-//        for (Day day1 : days) {
-//            webtoonDayLists = webtoonDayListService.findBywebtoonDay(day1);
-//            if (webtoonDayLists.isEmpty()) {
-//                List<Long> webtoon = webtoonService.getWebtoonAPI(day1.getUpdateDays());
-//                webtoonDayListService.SaveWebtoonDayList(day1.getId(), webtoon);
-//            }
-//        }
+        if (boxofficeList.isEmpty()) {
+            List<Map> failedMovieList = movieDailyAPI.movieDaily(date);
+            movieDailySize(failedMovieList);
+            movieService.listOfMovieDailyDTO();
+        }
+        boxofficeList = movieService.listOfMovieDailyDTO();
+
+        this.schedulerService.webtoonData();
+
+
+        List<WebtoonDayList> webtoonDayLists = new ArrayList<>();
+        for (Day day1 : days) {
+            webtoonDayLists = webtoonDayListService.findBywebtoonDay(day1);
+            if (webtoonDayLists.isEmpty()) {
+                List<Long> webtoon = webtoonService.getWebtoonAPI(day1.getUpdateDays());
+                webtoonDayListService.SaveWebtoonDayList(day1.getId(), webtoon);
+            }
+        }
 
         List<Webtoon> webtoonList = new ArrayList<>();
 

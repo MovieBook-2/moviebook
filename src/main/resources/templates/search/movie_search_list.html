@@ -29,7 +29,11 @@
                         <button>
                             <div class="img" style="padding : 5px; width: 213px; height: 305px; display: flex;
                         justify-content: center; align-items: center;">
-                                <img th:src="${movie.ImageUrl}" style="max-height: 100%;">
+                                <img th:src="${movie.imageUrl}"
+                                     th:if="${not #strings.isEmpty(movie.imageUrl)}"
+                                     style="width : 203px; height : 286px;">
+                                <img src="/imgs/noimg.jpg" th:if="${#strings.isEmpty(movie.imageUrl)}"
+                                     style="width : 203px; height : 286px;">
                             </div>
                             <div class="short-info" style="display : inline-grid; margin-left : 5px;">
                                 <input class="title"
