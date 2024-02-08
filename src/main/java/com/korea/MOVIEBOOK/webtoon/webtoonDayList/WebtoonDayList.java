@@ -25,5 +25,4 @@ public class WebtoonDayList {
 
     @ManyToOne
     private Webtoon webtoonList;
-
 }
